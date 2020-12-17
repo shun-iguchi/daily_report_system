@@ -34,9 +34,43 @@
                             <td>
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
+                        <tr>
+                            <th>ステータス</th>
+                            <td class="report_status">
+                            <c:if test="${report.approval == 0}">
+                                  承認
+                            </c:if>
+                            <c:if test="${report.approval == 1}">
+                                  非承認
+                            </c:if>
+                            <c:if test="${report.approval == 2}">
+                                  審査中
+                            </c:if></td>
                         </tr>
-                    </tbody>
-                </table>
+                        <tr>
+                            <th>承認</th>
+                            <td class="report_approval">
+                            <c:if test="${sessionScope.login_employee != null}">
+                        <c:if test="${sessionScope.login_employee.admin_flag == 2|| sessionScope.login_employee.admin_flag == 3}">
+                            <div style="display: inline-flex">
+                                <form method="POST" action="<c:url value='/reports/approval' />">
+                                    <input type="hidden" name="report_id" value="${report.id}" />
+                                    <input type="hidden" name="approval" value="0" />
+                                    <button type="submit" name="submit" value="${0}">承認</button>
+                                </form>
+                                &nbsp;
+                                <form method="POST" action="<c:url value='/reports/approval' />">
+                                    <input type="hidden" name="report_id" value="${report.id}" />
+                                    <input type="hidden" name="approval" value="1" />
+                                    <button type="submit" name="submit" value="${1}">非承認</button>
+                                </form>
+                            </div>
+                        </c:if>
+                      </c:if>
+                    </td>
+                  </tr>
+               </tbody>
+            </table>
 
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>

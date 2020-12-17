@@ -18,24 +18,22 @@ import javax.persistence.Table;
 @Table(name = "reports")
 @NamedQueries({
     @NamedQuery(
-            name = "getAllReports",
-            query = "SELECT r FROM Report AS r ORDER BY r.id DESC"
-            ),
+        name = "getAllReports",
+        query = "SELECT r FROM Report AS r ORDER BY r.id DESC"
+    ),
     @NamedQuery(
-            name = "getReportsCount",
-            query = "SELECT COUNT(r) FROM Report AS r"
-            ),
-
+        name = "getReportsCount",
+        query = "SELECT COUNT(r) FROM Report AS r"
+    ),
     @NamedQuery(
-            name = "getMyAllReports",
-            query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
-            ),
+        name = "getMyAllReports",
+        query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
+    ),
     @NamedQuery(
-            name = "getMyReportsCount",
-            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
-            )
+        name = "getMyReportsCount",
+        query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+    )
 })
-
 @Entity
 public class Report {
     @Id
@@ -62,6 +60,9 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Column(name = "approval", nullable = false)
+    private Integer approval;
 
     public Integer getId() {
         return id;
@@ -117,5 +118,13 @@ public class Report {
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public Integer getApproval() {
+        return approval;
+    }
+
+    public void setApproval(Integer approval) {
+        this.approval = approval;
     }
 }
