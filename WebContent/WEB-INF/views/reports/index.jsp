@@ -8,6 +8,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
+
         <h2>日報一覧</h2>
         <table id="report_list">
             <tbody>
@@ -16,19 +17,29 @@
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
                     <th class="report_action">操作</th>
+                    <th class="report_status">ステータス</th>
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td class="report_name"><c:out value="${report.employee.name}" /></td>
                         <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
                         <td class="report_title">${report.title}</td>
-                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
-
+                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a>
+                        <td class="report_status">
+                            <c:if test="${report.approval == 0}">
+                                  承認
+                            </c:if>
+                            <c:if test="${report.approval == 1}">
+                                  非承認
+                            </c:if>
+                            <c:if test="${report.approval == 2}">
+                                  審査中
+                            </c:if></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-
+​
         <div id="pagination">
             （全 ${reports_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((reports_count - 1) / 15) + 1}" step="1">
@@ -43,6 +54,6 @@
             </c:forEach>
         </div>
         <p><a href="<c:url value='/reports/new' />">新規日報の登録</a></p>
-
+​
     </c:param>
 </c:import>

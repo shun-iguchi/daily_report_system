@@ -46,6 +46,7 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            r.setApproval(2);
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
